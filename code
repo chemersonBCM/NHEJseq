@@ -1,0 +1,13 @@
+## First convert from Read to .fa
+
+
+ls | grep read | grep -v fa |  while read a; do  sed -n '/@HWI/,+1p' $a | sed 's/@/>/g' > $a.fa; done
+
+## Then blat
+
+ ls | grep fa | while read a; do blat ../WT_seq.fa $a -out=pslx ../pslx_files_2/$a.pslx; done
+
+## Then run Burtuchanalysis.java or whatevs and you're good to go.
+cd ../pslx_files_2;
+ls | while read a; do echo $a; java -classpath /stornext/snfs5/ruichen/dmhg/fgi/fudanstudent/zaneveld/burtuch burtuch_analysis $a; done
+
